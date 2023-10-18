@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Weather App</h1>
+    <form id="weatherForm">
+        <input type="text" id="locationInput" placeholder="Enter Location">
+        <button type="submit">Get Weather</button>
+    </form>
+    <div>
+        <button id="saveButton">Save as Home</button>
+    <button id="saveAreaButton">Save Area</button>
+    <button id="refreshButton">Refresh Weather for Saved Areas</button>
+    <button id="removeButton">Remove</button>
+    </div>
+    <div id="weatherInfo">
+    <div id="savedAreas"></div>
+    <div id="loading" class="hidden">Loading...</div>
+    <script src="script.js" defer></script>
+</body>
+
+</html>

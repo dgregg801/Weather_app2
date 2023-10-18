@@ -6,14 +6,34 @@ weatherForm.addEventListener('submit', function (e) {
     e.preventDefault();
     const location = locationInput.value;
     if (location) {
-        getWeatherData(location);
+        getGeoCodingInfo(location);
     }
 });
 
-function getWeatherData(location) {
+function getGeoCodingInfo(location) {
     // Replace 'YOUR_API_KEY' with your actual API key
     const apiKey = '944b444c9a6e0d95a21d8a65f8008860';
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}`;
+    const geoApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=1&appid=${apiKey}`;
+    
+    fetch(geoApiUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                const { lat, lon } = data[0];
+                getWeatherData(lat, lon, apiKey);
+            } else {
+                console.error('Location not found.');
+                weatherInfo.textContent = 'Location not found.';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching location data:', error);
+            weatherInfo.textContent = 'Error fetching location data.';
+        });
+}
+
+function getWeatherData(lat, lon, apiKey) {
+    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
     fetch(apiUrl)
         .then(response => response.json())
@@ -45,5 +65,3 @@ function displayWeatherInfo(weatherData) {
         <p>Description: ${weatherData.description}</p>
     `;
 }
-
-  
